@@ -9,8 +9,7 @@ class HashMap
     prime_number = 31
 
     key.each_char { |char| hash_code = prime_number * hash_code + char.ord }
-
-    hash_code
+     hash_code
   end
 
   def set(key, value)
@@ -18,5 +17,43 @@ class HashMap
     bucket_index = hash_code % @capacity
     bucket = @buckets[bucket_index]
 
+    found = false
 
+    bucket.each  do |k, v| 
+      if k == key
+        v = value
+        found = true
+      end
+    end
+    if found == false
+      bucket << [key,value]
+    end
+  end
 
+  def get(key)
+    hash_code = hash(key)
+    bucket_index = hash_code % @capacity
+    bucket = @buckets[bucket_index]
+    
+    bucket.each do |k, v|
+      if k == key
+        return v
+      end
+    end
+
+    return nil
+  end
+
+  def has?(key)
+    hash_code = hash(key)
+    bucket_index = hash_code % @capacity
+    bucket = @buckets[bucket_index]
+    
+    bucket.each do |k, v|
+      if k == key
+        return true
+      end
+    end
+
+    return false
+  end
