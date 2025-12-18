@@ -57,3 +57,20 @@ class HashMap
 
     return false
   end
+
+  def remove(key)
+    hash_code = hash(key)
+    bucket_index = hash_code % @capacity
+    bucket = @buckets[bucket_index]
+   
+    
+    bucket.each_with_index do |pair, index|
+      if pair[0] == key
+        removed_value = pair [1]
+        bucket.delete_at(index)
+        return removed_value
+      end
+    end
+    nil
+  end
+end
