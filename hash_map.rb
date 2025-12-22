@@ -91,6 +91,37 @@ class HashMap
     end
   end
 
+  def keys
+    all_keys = []
+    @buckets.each do |bucket|
+      bucket.each do |pair|
+        all_keys << pair[0]
+      end
+    end
+    return all_keys
+  end
+
+  def values
+    all_values = []
+    @buckets.each do |bucket|
+      bucket.each do |pair|
+        all_values << pair[1]
+      end
+    end
+    return all_values
+  end
+
+  def entries
+    all_pairs = []
+    @buckets.each do |bucket|
+      bucket.each do |pair|
+        all_pairs << pair
+      end
+    end
+    return all_pairs
+  end
+
+
 
 
     
