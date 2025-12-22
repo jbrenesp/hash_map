@@ -73,4 +73,30 @@ class HashMap
     end
     nil
   end
+
+  def length
+    counter = 0
+
+    @buckets.each do |bucket|
+      number_of_pairs = bucket.length
+        counter += number_of_pairs
+      end
+    end
+    return counter
+  end
+
+  def clear
+    @buckets.each do |bucket|
+      bucket.clear
+    end
+  end
+
+
+
+    
+
+
+
+
+
 end
