@@ -1,8 +1,11 @@
 class HashMap
+  attr_reader :capacity
+  
   def initialize
     @load_factor = 0.75
     @capacity = 16
-  end
+    @buckets = Array.new(@capacity) { [] }
+  end 
 
   def hash(key)
     hash_code = 0 
@@ -19,17 +22,21 @@ class HashMap
 
     found = false
 
-    bucket.each  do |k, v| 
-      if k == key
-        v = value
+    bucket.each  do |pair| 
+      if pair[0] == key
+        pair[1] = value
         found = true
       end
     end
-    if found == false
+    unless found
       bucket << [key,value]
     end
+    
+    if length > (@capacity * @load_factor)
+        resize
+    end
   end
-
+  
   def get(key)
     hash_code = hash(key)
     bucket_index = hash_code % @capacity
@@ -76,11 +83,9 @@ class HashMap
 
   def length
     counter = 0
-
     @buckets.each do |bucket|
       number_of_pairs = bucket.length
         counter += number_of_pairs
-      end
     end
     return counter
   end
@@ -121,13 +126,17 @@ class HashMap
     return all_pairs
   end
 
+  def resize
+  old_buckets = @buckets
+  @capacity *= 2
+  @buckets = Array.new(@capacity) { [] }
 
-
-
-    
-
-
-
+  old_buckets.each do |bucket|
+    bucket.each do |key, value|
+      set(key, value)
+    end
+  end
+end
 
 
 end
